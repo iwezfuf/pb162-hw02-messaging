@@ -7,25 +7,14 @@ import cz.muni.fi.pb162.hw02.mesaging.client.Producer;
 import java.util.Collection;
 import java.util.Collections;
 
-public class MessageProducer implements Producer {
-    private final Broker broker;
+public class MessageProducer extends MessageClient implements Producer {
 
     /**
      * Constructor
      * @param broker it's broker
      */
     public MessageProducer(Broker broker) {
-        this.broker = broker;
-    }
-
-    @Override
-    public Broker getBroker() {
-        return broker;
-    }
-
-    @Override
-    public Collection<String> listTopics() {
-        return broker.listTopics();
+        super(broker);
     }
 
     @Override

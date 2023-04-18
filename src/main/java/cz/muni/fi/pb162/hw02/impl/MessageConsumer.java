@@ -12,8 +12,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class MessageConsumer implements Consumer {
-    private final Broker broker;
+public class MessageConsumer extends MessageClient implements Consumer {
     private Map<String, Long> offsets = new HashMap<>();
 
     /**
@@ -21,16 +20,7 @@ public class MessageConsumer implements Consumer {
      * @param broker it's broker
      */
     public MessageConsumer(Broker broker) {
-        this.broker = broker;
-    }
-    @Override
-    public Broker getBroker() {
-        return broker;
-    }
-
-    @Override
-    public Collection<String> listTopics() {
-        return broker.listTopics();
+        super(broker);
     }
 
     @Override
@@ -63,7 +53,7 @@ public class MessageConsumer implements Consumer {
 
     @Override
     public void setOffsets(Map<String, Long> offsets) {
-        this.offsets = offsets;
+        this.offsets = new HashMap<>(offsets);
     }
 
     @Override

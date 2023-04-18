@@ -7,15 +7,17 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.atomic.AtomicLong;
 
 public class InMemoryBroker implements Broker {
-    private final ArrayList<Message> data = new ArrayList<>();
-    private static final AtomicLong COUNTER = new AtomicLong();
+    private final List<Message> data = new ArrayList<>();
+    private final AtomicLong counter = new AtomicLong();
     @Override
     public Collection<String> listTopics() {
-        HashSet<String> topics = new HashSet<>();
+        Set<String> topics = new HashSet<>();
         for (var message : data) {
             topics.addAll(message.topics());
         }
@@ -24,9 +26,9 @@ public class InMemoryBroker implements Broker {
 
     @Override
     public Collection<Message> push(Collection<Message> messages) {
-        ArrayList<Message> messagesWithId = new ArrayList<>();
+        List<Message> messagesWithId = new ArrayList<>();
         for (var message : messages) {
-            messagesWithId.add(new MessageImpl(COUNTER.getAndIncrement(), message.topics(), message.data()));
+            messagesWithId.add(new MessageImpl(counter.getAndIncrement(), message.topics(), message.data()));
         }
         data.addAll(messagesWithId);
         return messagesWithId;
@@ -34,9 +36,9 @@ public class InMemoryBroker implements Broker {
 
     @Override
     public Collection<Message> poll(Map<String, Long> offsets, int num, Collection<String> topics) {
-        HashSet<Message> messages = new HashSet<>();
+        Set<Message> messages = new HashSet<>();
 
-        HashMap<String, Integer> topicsCounts = new HashMap<>();
+        Map<String, Integer> topicsCounts = new HashMap<>();
         for (var topic : topics) {
             topicsCounts.put(topic, 0);
         }
