@@ -6,7 +6,7 @@ import cz.muni.fi.pb162.hw02.mesaging.client.Client;
 import java.util.Collection;
 
 public class MessageClient implements Client {
-    protected final Broker broker;
+    private final Broker broker;
 
     /**
      * Constructor

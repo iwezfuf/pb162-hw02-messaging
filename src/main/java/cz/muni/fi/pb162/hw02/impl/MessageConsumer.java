@@ -43,7 +43,7 @@ public class MessageConsumer extends MessageClient implements Consumer {
 
     @Override
     public Collection<Message> consume(Map<String, Long> offsets, int num, String... topics) {
-        return broker.poll(offsets, num, Arrays.asList(topics));
+        return getBroker().poll(offsets, num, Arrays.asList(topics));
     }
 
     @Override

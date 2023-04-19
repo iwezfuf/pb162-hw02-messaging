@@ -24,6 +24,6 @@ public class MessageProducer extends MessageClient implements Producer {
 
     @Override
     public Collection<Message> produce(Collection<Message> messages) {
-        return broker.push(messages);
+        return getBroker().push(messages);
     }
 }
